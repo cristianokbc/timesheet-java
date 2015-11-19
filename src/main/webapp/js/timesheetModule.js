@@ -1,95 +1,102 @@
-(function () {
-    "use strict"
+(function() {
+var module = angular.module("timesheetModule", ["angular-hal", "ngRoute", "ui.utils.masks"]);
 
-    angular.module("timesheetModule", ["angular-hal", "angular-loading-bar", "angular-search-box", "chart.js", "LocalStorageModule", "ngAnimate", "ngRoute", "sticky", "ui.utils.masks"])
+    module.filter("hateoasHref", function(){
+       return function(href){
+           if(href){
+               href = URI(href).resource();
+               var index = href.indexOf("/",1);
+               href = href.substring(index);
+               console.log(href);
+               return "#" + href;
+           }
+           else
+           return null;
 
-    angular.module("timesheetModule").factory("interceptors", ["$locale", "$q", "alertService", "authenticationService", "errorService", function ($locale, $q, alertService, authenticationService, errorService) {
-        return {
-            request: function (request) {
-                alertService.clearAlerts()
-                errorService.clearErrors()
-                if (!request.headers["Accept-Language"]) {
-                    var id = $locale.id
-                    var index = id.indexOf("-")
-                    if (index < 0) {
-                        request.headers["Accept-Language"] = id
-                    } else {
-                        request.headers["Accept-Language"] = id.substring(0, index) + "-" + id.substring(index + 1).toUpperCase()
-                    }
-                }
-                return request
-            },
+       };
+    });
 
-            responseError: function (rejection) {
-                if (rejection.status == 401) {
-                    if (!rejection.config.bypassAuthenticationInterceptor) {
-                        return authenticationService.$http(rejection.config)
-                    } else {
-                        return $q.reject(rejection)
-                    }
-                } else {                    
-                    if (!rejection.config.ignoreErrors) {
-                        if (rejection.data) {
-                            errorService.setErrors(rejection.data)
-                            _.each(rejection.data.globalErrors, function (error) {
-                                alertService.addAlert({
-                                    type: alertService.DANGER,
-                                    message: error.message
-                                })
-                            })
-                        } else {
-                            alertService.addAlert({
-                                type: alertService.DANGER,
-                                message: "An unknown error has occurred"
-                            })
-                        }                        
-                    }
-                    return $q.reject(rejection)
-                }
+    module.config(function ($routeProvider) {
+        var res =  {
+            rec_time: function($http, $location, halClient){
+              /*  return $http({
+                    method:"GET",
+                    url: "/api" + $location.url()
+                });
+
+                */
+
+                return halClient.$get("/api" + $location.url());
             }
-        }
-    }])
+        };
+        $routeProvider.when("/timesheets/:start", {
+            resolve: res,
+            controller: function($http, $location,  $scope, rec_time){
 
-    angular.module("timesheetModule").config(["$httpProvider", "$routeProvider", "cfpLoadingBarProvider", function ($httpProvider, $routeProvider, cfpLoadingBarProvider) {
-        $httpProvider.interceptors.push("interceptors");
+                $scope.handleSearch = function(param) {
+                    console.log("oooooooooooooooe" + param);
+                }
 
-        var resolve = {
-            resource: ["$location", "halClient", function ($location, halClient) {
-                return halClient.$get(document.location.origin + "/api" + $location.url())
-            }]
-        }
 
-        $routeProvider
-            .when("/", {})
-            .when("/projects/search/options/form", {
-                controller: "projectSearchOptionsFormController",
-                resolve: resolve,
-                templateUrl: "html/project/searchOptionsForm.html"
-            })
-            .when("/projects/search/result", {
-                controller: "projectSearchResultController",
-                resolve: resolve,
-                templateUrl: "html/project/searchResult.html"
-            })
-            .when("/projects/:id/form", {
-                controller: "projectFormController",
-                resolve: resolve,
-                templateUrl: "html/project/form.html"
-            })
-            .when("/timesheets/:start", {
-                controller: "timesheetController",
-                resolve: resolve,
-                templateUrl: "html/timesheet.html"
-            })
-            .when("/notFound", {
-                templateUrl: "html/notFound.html"
-            })
-/*            
-            .otherwise({
-                redirectTo: "/notFound"
-            })
-*/            
+                $scope.filterProjectRow = function(projectRow){
+                    if($scope.filterProj && $scope.projectName){
+                        return projectRow.project.toLowerCase().indexOf($scope.projectName) >= 0;
+                    } else {
+                        return true;
+                    }
+                }
+                $scope.filterTaskRow = function(taskRow){
+                    if($scope.filterTask && $scope.taskName){
+                        return taskRow.task.toLowerCase().indexOf($scope.taskName) >= 0;
+                    } else {
+                        return true;
+                    }
+                }
 
-        cfpLoadingBarProvider.includeSpinner = false
-    }])
-})()
+
+                console.log(rec_time);
+                $scope.rec_time = rec_time;// .data;
+
+                $scope.saveEntry = function($event, projectRow, taskRow, entryCell){
+                    console.log(arguments);
+
+                    if($event.keyCode == 13){
+                        console.log('enter');
+                        var timesheet = {
+                            projectRows:[{
+                                id:projectRow.id,
+                                taskRows: [{
+                                    id: taskRow.id,
+                                    entryCells : [{
+                                        column: entryCell.column,
+                                        time: entryCell.time
+                                    }]
+                                }]
+                            }]
+                        };
+
+                        console.log(timesheet);
+                      /*  $http({
+                            method:"PATCH",
+                            url: $scope.rec_time._links.save.href,
+                            data: timesheet
+                        });
+                        */
+                        resource.$patch("save", null, timesheet);// segundo argumento sao os parametros
+                    }
+                };
+
+            },
+            templateUrl:"html/timesheet.html"
+        })
+
+        .otherwise({
+            redirectTo:"/timesheets/today"
+        })
+    })
+})();
+
+
+
+
+

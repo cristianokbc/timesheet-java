@@ -1,0 +1,9 @@
+<span ng-hide="searching">{{label}}</span>
+<a href="" ng-hide="searching" ng-click="showSearch()">
+    <i class="glyphicon glyphicon-search"></i>
+</a>
+dentro: {{searchText}}
+<input type="text" ng-hide="!searching" ng-model="searchText">
+<a href="" ng-hide="!searching" ng-click="hideSearch()">
+    <i class="glyphicon glyphicon-remove" ng-hide="!searching"></i>
+</a>

@@ -1,0 +1,32 @@
+{
+  "name": "angular-search-box",
+  "version": "1.0.0",
+  "description": "An AngularJS directive that provides a collapsible search box",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saulo2/angular-search-box.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "Search"
+  ],
+  "author": "Saulo Araujo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/saulo2/angular-search-box/issues"
+  },
+  "homepage": "https://github.com/saulo2/angular-search-box#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "angular-template-inline-js": "^0.1.6",
+    "grunt-angular-template-inline-js": "^0.1.1",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-remove": "^0.1.0",
+    "grunt-contrib-uglify": "^0.9.1"
+  }
+}

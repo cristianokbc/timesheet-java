@@ -1,0 +1,10 @@
+<div style="display: table-row">
+    <div style="display: table-cell; vertical-align: middle; width: 100%">
+        <span ng-hide="searching">{{label}}</span>
+        <input type="text" style="width: 100%" ng-show="searching" ng-model="model" ng-blur="handleBlur()" ng-keydown="handleKeyDown($event)"/>
+    </div>
+    <div style="display: table-cell; padding-left: 8px; vertical-align: middle">
+        <a href="#" class="glyphicon glyphicon-search" ng-hide="searching" ng-click="showSearchBox($event)"></a>
+        <a href="#" class="glyphicon glyphicon-remove" ng-show="searching" ng-click="hideSearchBox($event)"></a>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html ng-app="angular-search-box-test">
+    <head lang="en">
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+
+        <script src=//ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.min.js></script>
+
+        <script src="../../target/js/angular-search-box.min.js"></script>
+        <script src="../js/angular-search-box-test.js"></script>
+
+        <style>
+            body {
+                padding-top: 60px;
+            }
+
+            .table > thead > tr > th,
+            .table > tbody > tr > td {
+                text-align: center;
+
+                vertical-align: middle;
+            }
+
+            .table > thead > tr > th input[type="text"] {
+                border: none;
+
+                padding: 0px;
+
+                text-align: center;
+            }
+
+            a:hover {
+                text-decoration: none;
+            }
+        </style>
+
+        <title>angular-search-box-test</title>
+    </head>
+    <body ng-controller="testController">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-offset-3 col-lg-6">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <search-box label="Phase" model="phaseNamePrefix" searching="filteringPhase"></search-box>
+                                </th>
+                                <th>
+                                    <search-box label="Discipline" model="disciplineNamePrefix" searching="filteringDiscipline"></search-box>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="phase in phases | filter: filterPhase">
+                            <tr ng-repeat="discipline in phase.disciplines | filter: filterDiscipline">
+                                <td>
+                                    {{phase.name}}
+                                </td>
+                                <td>
+                                    {{discipline.name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

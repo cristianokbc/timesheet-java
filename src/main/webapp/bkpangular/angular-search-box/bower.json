@@ -1,0 +1,21 @@
+{
+  "name": "angular-search-box",
+  "version": "1.0.0",
+  "homepage": "https://github.com/saulo2/angular-search-box",
+  "authors": [
+    "Saulo Araujo <contact@sauloaraujo.com>"
+  ],
+  "description": "An AngularJS directive that provides a collapsible search box",
+  "main": "target/js/angular-search-box.js",
+  "keywords": [
+    "AngularJS",
+    "Search"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".idea",
+    "node_modules",
+    ".gitignore",
+    "Gruntfile.js"
+  ]
+}
