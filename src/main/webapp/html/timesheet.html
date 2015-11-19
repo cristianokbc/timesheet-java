@@ -1,5 +1,6 @@
-<h1>Time shit</h1>
+<h1>Timesheet</h1>
 
+<!--
 <table class="table table-bordered">
     <tbody>
     <tr >
@@ -12,9 +13,9 @@
     </tr>
     </tbody>
 </table>
+-->
 
-{{taskRow.entryCells}}
-<table class="table table-bordered timesheet">
+<table class="table table-bordered timesheet" sticky>
     <thead>
     <tr>
         <th colspan="2"></th>
@@ -28,10 +29,10 @@
             </hateoas-a>
 
             <span class="pull-right">
-            <hateoas-a res-a="rec_time" rel="plus">
+            <hateoas-a res-a="rec_time" rel="minus">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </hateoas-a>
-            <hateoas-a res-a="rec_time" rel="minus">
+            <hateoas-a res-a="rec_time" rel="plus">
                 <i class="glyphicon glyphicon-plus-sign"></i>
             </hateoas-a>
 </span>
@@ -39,15 +40,19 @@
         </th>
     </tr>
     <tr>
+        <!--
         fora:{{projectName}}
         fora:{{taskName}}
         search p: {{filterProj}}
         search T: {{filterTask}}
+        -->
         <th><search-box on-search="handleSearch(projectName)" label="Projeto" searching="filterProj" search-text="projectName"></search-box></th>
         <th><search-box label="Tarefa" searching="filterTask" search-text="taskName"></search-box></th>
         <th ng-repeat="d in rec_time.dates">{{d  | date: "shortDate": "UTC"}}</th>
     </tr>
     </thead>
+    </table>
+<table class="table table-bordered timesheet">
     <tbody ng-repeat="projectRow in rec_time.projectRows | filter: filterProjectRow">
         <tr ng-repeat="taskRow in projectRow.taskRows | filter: filterTaskRow">
 

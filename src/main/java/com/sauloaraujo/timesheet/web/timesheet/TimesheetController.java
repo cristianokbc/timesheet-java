@@ -20,7 +20,7 @@ import java.util.Date;
 
 
 @RestController
-@RequestMapping("/api/timesheets")
+@RequestMapping("/api/timesheet")
 public class TimesheetController {
 
     private @Autowired
@@ -35,21 +35,23 @@ public class TimesheetController {
     private @Autowired
     CalendarService calendarService;
 
-    @RequestMapping(method = RequestMethod.GET, value="/today")
-    public TimesheetResource get(
-            @RequestParam(value="days", defaultValue="7") int days
-    )
-    {
-        return get(dateService.midnight(),days);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value="/today")
+//    public TimesheetResource get(
+//            @RequestParam(value="days", defaultValue="7") int days
+//    )
+//    {
+//        return get(dateService.midnight(),days);
+//    }
 
-    @RequestMapping(method = RequestMethod.GET, value="/{start}")
+    @RequestMapping(method = RequestMethod.GET)
     public TimesheetResource get(
-            @PathVariable("start")
-            @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date start,
-            @RequestParam(value="days", defaultValue="7") int days
-    )
-    {
+            @RequestParam(value="start", required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date start,
+            @RequestParam(value="days", defaultValue="7", required = false) Integer
+                    days) {
+
+        if (start == null) {
+            start = dateService.midnight();
+        }
         TimesheetResource resource = mapper.map(service.get(start, days), TimesheetResource.class);
         resource.add(
                 linkTo(

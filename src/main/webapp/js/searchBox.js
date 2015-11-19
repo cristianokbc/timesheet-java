@@ -1,12 +1,16 @@
-/**
- * Created by deinf.rsoares on 18/11/2015.
- */
 angular.module("timesheetModule").directive("searchBox", function(){
     var contro = function($scope, $element, $timeout) {
         $scope.showSearch = function () {
             $scope.searching = true;
 
             $scope.onSearch();
+
+            // Propaga em direção à raiz
+            $scope.$emit("searchStarted", {
+                message: "Search started"
+            })
+
+            // Propaga em direção às folhas
 
             console.log($element);
             $timeout(function(){

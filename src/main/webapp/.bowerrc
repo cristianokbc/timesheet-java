@@ -1,6 +1,6 @@
 {
-    "strict-ssl": false,
-    "registry": "http://bower:5678",
-    "proxy": "http://cache:8080",
-    "https-proxy": "http://cache:8080"
+	"registry" : "http://sbcdf345/artifactory/api/bower/bower-heroku-github",
+	"resolvers" : [
+		"bower-art-resolver"
+	]
 }

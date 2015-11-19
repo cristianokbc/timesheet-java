@@ -39,7 +39,10 @@
 
 
         <script src="js/timesheetModule.js"></script>
+        <script src="js/rootController.js"></script>
+        <script src="js/timesheetController.js"></script>
         <script src="js/hateoasA.js"></script>
+        <script src="js/hateoasHref.js"></script>
         <script src="js/searchBox.js"></script>
 
         <style>
@@ -57,15 +60,16 @@
             .timesheet > thead > tr > th {
                 text-align: center;
                 vertical-align: middle;
+                background-color: white;
             }
         </style>
 
 
         </head>
     <body>
+        <ng-include src="'html/menu.html'"></ng-include>
         <div class="container">
             <ng-view></ng-view>
         </div>
-
     </body>
 </html>

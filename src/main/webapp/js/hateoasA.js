@@ -1,6 +1,3 @@
-/**
- * Created by deinf.rsoares on 18/11/2015.
- */
 angular.module("timesheetModule").directive("hateoasA", function(){
     return {
         templateUrl: "html/hateoasA.html",
