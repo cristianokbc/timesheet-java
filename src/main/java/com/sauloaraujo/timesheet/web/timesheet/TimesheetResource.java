@@ -8,9 +8,6 @@ import org.springframework.hateoas.ResourceSupport;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by deinf.rsoares on 13/11/2015.
- */
 @Setter
 @Getter
 public class TimesheetResource extends ResourceSupport {

@@ -1,3 +1,8 @@
+/*
+Remove ao prefixo /api de uma URL, mantendo-a compatível com o padrão que escolhemos dos links HATEOAS serem iguais
+às rotas do Angular mas sem esse prefixo.
+ */
+
 angular.module("timesheetModule").filter("hateoasHref", function () {
     return function (href) {
         if (href) {

@@ -1,7 +1,7 @@
-angular.module("timesheetModule").controller("timesheetController", function ($http, $location, $scope, rec_time, halClient) {
+angular.module("timesheetModule").controller("timesheetController", function ($http, $location, $scope, rec_time, apiClient) {
 
     $scope.$on("$routeUpdate", function () {
-        halClient.$get("/api" + $location.url())
+        apiClient.$get($location.url())
             .then(function (resource) {
                 $scope.rec_time = resource;
             })
@@ -54,7 +54,7 @@ angular.module("timesheetModule").controller("timesheetController", function ($h
             };
 
             console.log(timesheet);
-            resource.$patch("save", null, timesheet);// segundo argumento sao os parametros
+            rec_time.$patch("save", null, timesheet);// segundo argumento sao os parametros
         }
     };
 
