@@ -19,20 +19,20 @@
     <thead>
     <tr>
         <th colspan="2"></th>
-        <th colspan="{{rec_time.dates.length}}">
-            <hateoas-a res-a="rec_time" rel="previous">
+        <th colspan="{{resource.dates.length}}">
+            <hateoas-a res-a="resource" rel="previous">
                 <i class="glyphicon glyphicon-circle-arrow-left"></i>
             </hateoas-a>
             Date
-            <hateoas-a res-a="rec_time" rel="next">
+            <hateoas-a res-a="resource" rel="next">
                 <i class="glyphicon glyphicon-circle-arrow-right"></i>
             </hateoas-a>
 
             <span class="pull-right">
-            <hateoas-a res-a="rec_time" rel="minus">
+            <hateoas-a res-a="resource" rel="minus">
                 <i class="glyphicon glyphicon-minus-sign"></i>
             </hateoas-a>
-            <hateoas-a res-a="rec_time" rel="plus">
+            <hateoas-a res-a="resource" rel="plus">
                 <i class="glyphicon glyphicon-plus-sign"></i>
             </hateoas-a>
 </span>
@@ -48,12 +48,12 @@
         -->
         <th><search-box on-search="handleSearch(projectName)" label="Projeto" searching="filterProj" search-text="projectName"></search-box></th>
         <th><search-box label="Tarefa" searching="filterTask" search-text="taskName"></search-box></th>
-        <th ng-repeat="d in rec_time.dates">{{d  | date: "shortDate": "UTC"}}</th>
+        <th ng-repeat="d in resource.dates">{{d  | date: "shortDate": "UTC"}}</th>
     </tr>
     </thead>
     </table>
 <table class="table table-bordered timesheet">
-    <tbody ng-repeat="projectRow in rec_time.projectRows | filter: filterProjectRow">
+    <tbody ng-repeat="projectRow in resource.projectRows | filter: filterProjectRow">
         <tr ng-repeat="taskRow in projectRow.taskRows | filter: filterTaskRow">
 
             <td rowspan="{{projectRow.taskRows.length}}" ng-show="$first" >

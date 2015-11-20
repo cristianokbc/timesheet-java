@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/projects")
 public class ProjectController {
 
     @RequestMapping(method = RequestMethod.GET, value="/search/form")

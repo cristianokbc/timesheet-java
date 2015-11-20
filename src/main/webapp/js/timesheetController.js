@@ -1,9 +1,9 @@
-angular.module("timesheetModule").controller("timesheetController", function ($http, $location, $scope, rec_time, apiClient) {
+angular.module("timesheetModule").controller("timesheetController", function ($http, $location, $scope, resource, apiClient) {
 
     $scope.$on("$routeUpdate", function () {
         apiClient.$get($location.url())
             .then(function (resource) {
-                $scope.rec_time = resource;
+                $scope.resource = resource;
             })
     })
 
@@ -32,8 +32,8 @@ angular.module("timesheetModule").controller("timesheetController", function ($h
     }
 
 
-    console.log(rec_time);
-    $scope.rec_time = rec_time;// .data;
+    //console.log(resource);
+    $scope.resource = resource;// .data;
 
     $scope.saveEntry = function ($event, projectRow, taskRow, entryCell) {
         console.log(arguments);
@@ -54,7 +54,7 @@ angular.module("timesheetModule").controller("timesheetController", function ($h
             };
 
             console.log(timesheet);
-            rec_time.$patch("save", null, timesheet);// segundo argumento sao os parametros
+            resource.$patch("save", null, timesheet);// segundo argumento sao os parametros
         }
     };
 

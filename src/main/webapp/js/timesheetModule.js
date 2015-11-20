@@ -2,7 +2,7 @@ angular.module("timesheetModule", ["angular-hal", "ngRoute", "sticky", "ui.utils
 angular.module("timesheetModule")
     .config(function ($routeProvider) {
         var res = {
-            rec_time: function ($http, $location, apiClient) {
+            resource: function ($http, $location, apiClient) {
                 return apiClient.$get($location.url());
             }
         };
@@ -16,11 +16,11 @@ angular.module("timesheetModule")
                 templateUrl: "html/timesheet.html",
                 controller: "timesheetController"
             })
-            .when("/search/form", {
+            .when("/projects/search/form", {
                 reloadOnSearch: false,
-                //resolve: res,
-                templateUrl: "html/searchForm.html"
-                //controller: "timesheetController"
+                resolve: res,
+                templateUrl: "html/projectSearch.html",
+                controller: "projectSearchController"
             })
             .otherwise({
                 redirectTo: "/timesheet"
