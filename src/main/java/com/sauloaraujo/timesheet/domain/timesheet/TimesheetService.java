@@ -113,7 +113,7 @@ public class TimesheetService {
 		entryRepository.save(entries);
  
 		List<Date> dates = new ArrayList<>();
-		dates.add(start);		
+		dates.add(start);
 		timesheet.setDates(dates);
 		TimesheetPatchedEvent event = new TimesheetPatchedEvent(this);
 		event.setTimesheet(timesheet);

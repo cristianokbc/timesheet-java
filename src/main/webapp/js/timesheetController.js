@@ -1,5 +1,32 @@
 angular.module("timesheetModule").controller("timesheetController", function ($http, $location, $scope, resource, apiClient) {
 
+    var labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+    var data = [300, 500, 100];
+
+    $scope.getLabels = function() {
+        labels.length = 0;
+        _.each($scope.resource.projectRows, function(projectRow) {
+            labels.push(projectRow.project);
+        });
+        return labels;
+    }
+
+    $scope.getData = function() {
+        data.length = 0;
+        _.each($scope.resource.projectRows, function(projectRow) {
+            var total = 0;
+            _.each(projectRow.taskRows, function(taskRow) {
+                _.each(taskRow.entryCells, function(entryCell) {
+                    if (entryCell.time) {
+                        total += entryCell.time;
+                    }
+                });
+            });
+            data.push(total);
+        });
+        return data;
+    }
+
     $scope.$on("$routeUpdate", function () {
         apiClient.$get($location.url())
             .then(function (resource) {
@@ -58,4 +85,18 @@ angular.module("timesheetModule").controller("timesheetController", function ($h
         }
     };
 
+    var broker = Stomp.over(new SockJS("/stomp"));
+    broker.debug = function(message) {
+    };
+
+    broker.connect({}, function() {
+        console.log("Connected!!");
+        broker.subscribe("/topic/timesheet/patch", function(message) {
+            var timesheet = JSON.parse(message.body);
+            //console.log(timesheet);
+            $scope.$apply(function() {
+                $scope.resource.projectRows[0].taskRows[0].entryCells[0].time = timesheet.projectRows[0].taskRows[0].entryCells[0].time;
+            });
+        })
+    })
 })

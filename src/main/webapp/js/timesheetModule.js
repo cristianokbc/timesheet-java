@@ -1,4 +1,4 @@
-angular.module("timesheetModule", ["angular-hal", "ngRoute", "sticky", "ui.utils.masks", "ngAnimate"])
+angular.module("timesheetModule", ["angular-hal", "ngRoute", "sticky", "chart.js", "ui.utils.masks", "ngAnimate"])
 angular.module("timesheetModule")
     .config(function ($routeProvider) {
         var res = {
